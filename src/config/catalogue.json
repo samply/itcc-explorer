@@ -1,0 +1,57 @@
+[
+    {
+        "fieldType": "group",
+        "key": "patient",
+        "name": "Patient",
+        "childCategories": [
+            {
+                "key": "gender",
+                "name": "Sex",
+                "system": "",
+                "fieldType": "single-select",
+                "type": "EQUALS",
+                "criteria": [
+                    {
+                        "key": "Male",
+                        "name": "Male",
+                        "description": "Male"
+                    },
+                    {
+                        "key": "Female",
+                        "name": "Female",
+                        "description": "Female"
+                    },
+                    {
+                        "key": "Unknown",
+                        "name": "Unknown",
+                        "description": "Unknown"
+                    }
+                ]
+            },
+            {
+                "key": "vital_status",
+                "name": "Vital Status",
+                "system": "http://fhir.itcc.org/CodeSystem/VitalStatus",
+                "fieldType": "single-select",
+                "type": "EQUALS",
+                "criteria": [
+                    {
+                        "key": "Alive",
+                        "name": "Alive",
+                        "description": "Alive"
+                    },
+                    {
+                        "key": "Dead",
+                        "name": "Dead",
+                        "description": "Dead"
+                    },
+                    {
+                        "key": "Unknown",
+                        "name": "Unknown",
+                        "description": "Unknown"
+                    }
+                ]
+            }
+        ]
+    }
+]
