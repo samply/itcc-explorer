@@ -52,7 +52,6 @@
   },
   "resultSummaryOptions": {
     "title": "Results",
-    "infoButtonText": "Results",
     "dataTypes": [
       {
         "title": "Sites",

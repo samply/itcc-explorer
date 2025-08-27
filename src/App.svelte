@@ -1,14 +1,32 @@
 <script lang="ts">
     import "./app.css";
-    import { setCatalogue, type Catalogue } from "@samply/lens";
+    import { 
+        setOptions,
+        setCatalogue, 
+        type Catalogue } from "@samply/lens";
     import catalogueJson from "./config/catalogue.json";
-    
+    import { options } from "./lib/env-options";
+    import { SvelteMap } from "svelte/reactivity";
+    import { onMount } from "svelte";
 
     let catalogue = catalogueJson as Catalogue;
     setCatalogue(catalogue);
-    
+    onMount(() => {
+        setOptions(options);
+    })
     const saveQuery = () =>{}
     let catalogueOpen: boolean = false;
+    const barChartBackgroundColors: string[] = ["#4dc9f6", "#3da4c7"];
+
+    const genderHeaders: Map<string, string> = new SvelteMap<string, string>()
+        .set("male", "Male")
+        .set("female", "Female")
+        .set("unknown", "Unknown");
+    
+    const vitalStateHeaders: Map<string, string> = new SvelteMap<string, string>()
+    .set("lebend", "alive")
+    .set("verstorben", "deceased")
+    .set("unbekannt", "unknown");
 </script>
 
 <header>
@@ -77,6 +95,67 @@
             <lens-catalogue toggle={{ collapsable: false, open: catalogueOpen }}
             ></lens-catalogue>
         </div>
+    </div>
+
+    <div class="charts">
+        <div class="chart-wrapper result-summary">
+        <lens-result-summary></lens-result-summary>
+        {#if options.projectmanagerOptions}
+          <lens-negotiate-button
+            type="ProjectManager"
+            title="Data and sample requests"
+          ></lens-negotiate-button>
+        {/if}
+        <lens-search-modified-display>Charts no longer represent the current search!</lens-search-modified-display>
+      </div>
+      <div class="chart-wrapper chart-diagnosis">
+        <lens-chart
+          title="Diagnosis"
+          dataKey="diagnosis"
+          chartType="bar"
+          indexAxis="y"
+          groupingDivider="."
+          groupingLabel=".%"
+          filterRegex={"^(C.{2,6}|D[0-4][0-9].{0,4})"}
+          xAxisTitle="Diagnosis Count"
+          yAxisTitle="ICD-10-Codes"
+          backgroundColor={barChartBackgroundColors}
+        ></lens-chart>
+      </div>
+      <div class="chart-wrapper result-table">
+        <lens-result-table pageSize={10}>
+        </lens-result-table>
+      </div>
+       <div class="chart-wrapper">
+        <lens-chart
+          title="Vital Status"
+          dataKey="75186-7"
+          chartType="pie"
+          displayLegends={true}
+          headers={vitalStateHeaders}
+        ></lens-chart>
+      </div>
+        <div class="chart-wrapper chart-age-distribution">
+        <lens-chart
+          title="Diagnosis Age Distribution"
+          dataKey="age_at_diagnosis"
+          chartType="bar"
+          groupRange={10}
+          filterRegex="^(([0-9]?[0-9]$)|(1[0-2]0))"
+          xAxisTitle="Age"
+          yAxisTitle="Diagnosis Count"
+          backgroundColor={barChartBackgroundColors}
+        ></lens-chart>
+      </div>
+      <div class="chart-wrapper">
+        <lens-chart
+          title="Sex Distribution "
+          dataKey="gender"
+          chartType="pie"
+          displayLegends={true}
+          headers={genderHeaders}
+        ></lens-chart>
+      </div>
     </div>
   </div>
 </main>
