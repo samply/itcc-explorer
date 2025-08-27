@@ -1,7 +1,14 @@
 <script lang="ts">
     import "./app.css";
+    import { setCatalogue, type Catalogue } from "@samply/lens";
+    import catalogueJson from "./config/catalogue.json";
+    
 
+    let catalogue = catalogueJson as Catalogue;
+    setCatalogue(catalogue);
+    
     const saveQuery = () =>{}
+    let catalogueOpen: boolean = false;
 </script>
 
 <header>
@@ -51,6 +58,27 @@
       <lens-search-button title="Search"></lens-search-button>
     </div>
   </div>
+
+  <div class="grid">
+    <div class="catalogue-wrapper">
+        <div class="catalogue">
+            <div class="catalogue-header">
+                <h2>Search Criteria</h2>
+                <lens-info-button
+                    message={[
+                    `The search is patient-oriented.`,
+                    `For patients with multiple oncological diagnoses, selected search criteria may not only refer to one disease, but also to others.`,
+                    `Within a category, different variations are searched with an 'OR-link'; when searching across multiple categories, with an 'AND-link'.`,
+                    ]}
+                    buttonSize="20px"
+                    alignDialogue="left"
+                ></lens-info-button>
+            </div>
+            <lens-catalogue toggle={{ collapsable: false, open: catalogueOpen }}
+            ></lens-catalogue>
+        </div>
+    </div>
+  </div>
 </main>
 
 <footer > 
@@ -61,3 +89,15 @@
       <img src="../logo-dkfz.svg" alt="DKFZ" />
   </div>
 </footer>
+
+<style>
+  .catalogue-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--gap-s);
+  }
+  .catalogue-header h2 {
+    margin: 0;
+  }
+</style>
