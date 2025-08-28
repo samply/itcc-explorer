@@ -3,18 +3,99 @@
     import { 
         setOptions,
         setCatalogue, 
+        getAst,
+        buildLibrary,
+        buildMeasure,
+        clearSiteResults,
+        querySpot,
+        markSiteClaimed,
+        setSiteResult,
+        type SpotResult,
         type Catalogue } from "@samply/lens";
     import catalogueJson from "./config/catalogue.json";
+    import { measures } from "$lib/measures";
+    import { negotiate } from "$lib/project-manager";
+    import { translateAstToCql } from "$lib/ast-to-cql-translator";
     import { options } from "./lib/env-options";
     import { SvelteMap } from "svelte/reactivity";
     import { onMount } from "svelte";
+
+  let abortController = new AbortController();
+  window.addEventListener("lens-search-triggered", () => {
+    abortController.abort();
+    abortController = new AbortController();
+
+    // AST to CQL translation
+    const cql = translateAstToCql(
+      getAst(),
+      false,
+      "DKTK_STRAT_DEF_IN_INITIAL_POPULATION",
+      measures,
+    );
+    const lib = buildLibrary(cql);
+    const measure = buildMeasure(
+      lib.url,
+      measures.map((m) => m.measure),
+    );
+
+    clearSiteResults();
+    const query = btoa(
+      JSON.stringify({
+        lang: "cql",
+        lib,
+        measure,
+      }),
+    );
+    querySpot(query, abortController.signal, (result: SpotResult) => {
+      const site = result.from.split(".")[1];
+      if (result.status === "claimed") {
+        markSiteClaimed(site);
+      } else if (result.status === "succeeded") {
+        const siteResult = JSON.parse(atob(result.body));
+        setSiteResult(site, siteResult);
+      } else {
+        console.error(
+          `Site ${site} failed with status ${result.status}:`,
+          result.body,
+        );
+      }
+    });
+  });
+
+  window.addEventListener("lens-negotiate-triggered", () => {
+    negotiate();
+  });
 
     let catalogue = catalogueJson as Catalogue;
     setCatalogue(catalogue);
     onMount(() => {
         setOptions(options);
     })
-    const saveQuery = () =>{}
+
+    const saveQuery = () =>{
+       // The query is already stored in the URL, so we can create a simple HTML file that redirects to the current URL.
+    const url = window.location.href;
+    const htmlContent = `<html><head><meta http-equiv="refresh" content="0;url=${url}"></head><body></body></html>`;
+
+    const blob = new Blob([htmlContent], { type: "text/html" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    const currentDate = new Date();
+
+        const formattedDate = currentDate.toLocaleDateString("de-DE", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    a.download = `itcc-explorer-query-${formattedDate}.html`;
+
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    }
+
     let catalogueOpen: boolean = false;
     const barChartBackgroundColors: string[] = ["#4dc9f6", "#3da4c7"];
 
