@@ -22,6 +22,48 @@
     import catalogueProd from "./config/catalogue.json";
     import catalogueTest from "./config/catalogue-test.json";
 
+    function normalizeStratifierUsingAggregator(
+    siteResult: any,
+    stratKey: string,
+    aggregator: (values: Array<{ key: string; population: number }>) =>
+      Array<{ key: string; population: number }>
+  ) {
+    const s = siteResult?.stratifiers;
+    if (!s || !s[stratKey]) return;
+
+    // object -> array
+    const asArray = Object.entries(s[stratKey]).map(([key, population]) => ({
+      key,
+      population: Number(population) || 0,
+    }));
+
+    // normalize
+    const normalized = aggregator(asArray);
+
+    // array -> object
+    s[stratKey] = Object.fromEntries(
+      normalized.map(({ key, population }) => [key, population])
+    );
+  }
+
+  const normalizeGenderAggregator = (values: Array<{ key: string; population: number }>) => {
+  const map = new Map<string, number>();
+  const canon = (raw: string) => {
+    const k = raw.trim().toLowerCase();
+    if (k === "m" || k === "male") return "Male";
+    if (k === "f" || k === "female") return "Female";
+    if (["other", "diverse"].includes(k)) return "Other";
+    if (["unknown", "unbekannt", "unk", "n/a", "na"].includes(k)) return "Unknown";
+    return raw.charAt(0).toUpperCase() + raw.slice(1);
+  };
+
+  for (const { key, population } of values) {
+    const c = canon(key);
+    map.set(c, (map.get(c) || 0) + (Number(population) || 0));
+  }
+  return [...map.entries()].map(([key, population]) => ({ key, population }));
+};
+
   let abortController = new AbortController();
   window.addEventListener("lens-search-triggered", () => {
     abortController.abort();
@@ -55,6 +97,7 @@
         markSiteClaimed(site);
       } else if (result.status === "succeeded") {
         const siteResult = JSON.parse(atob(result.body));
+        normalizeStratifierUsingAggregator(siteResult, "Gender", normalizeGenderAggregator);
         setSiteResult(site, siteResult);
       } else {
         console.error(
@@ -108,8 +151,10 @@
     const barChartBackgroundColors: string[] = ["#4dc9f6", "#3da4c7"];
 
     const genderHeaders: Map<string, string> = new SvelteMap<string, string>()
-        .set("Male", "Male")
-        .set("Female", "Female");
+    .set("Male", "Male")
+    .set("male", "Male")
+    .set("Female", "Female")
+    .set("female", "Female");
     
     const vitalStateHeaders: Map<string, string> = new SvelteMap<string, string>()
     .set("lebend", "alive")
@@ -202,26 +247,14 @@
           dataKey="diagnosis"
           chartType="bar"
           indexAxis="y"
-          groupingDivider="."
-          groupingLabel=".%"
-          filterRegex={"^(C.{2,6}|D[0-4][0-9].{0,4})"}
           xAxisTitle="Diagnosis Count"
-          yAxisTitle="ICD-10-Codes"
+          yAxisTitle="Diagnosis"
           backgroundColor={barChartBackgroundColors}
         ></lens-chart>
       </div>
       <div class="chart-wrapper result-table">
         <lens-result-table pageSize={10}>
         </lens-result-table>
-      </div>
-       <div class="chart-wrapper">
-        <lens-chart
-          title="Vital Status"
-          dataKey="75186-7"
-          chartType="pie"
-          displayLegends={true}
-          headers={vitalStateHeaders}
-        ></lens-chart>
       </div>
         <div class="chart-wrapper chart-age-distribution">
         <lens-chart
@@ -248,7 +281,7 @@
   </div>
 </main>
 
-<footer > 
+<footer> 
   <div>
     Made with ♥ and <a href="https://github.com/samply/lens">samply/lens</a>
   </div>

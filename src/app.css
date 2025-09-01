@@ -270,6 +270,7 @@ info-icon {
 }
 
 footer {
+  margin: 0 var(--gap-xs) var(--gap-xs);
   display: flex;
   justify-content: center;
   padding: var(--gap-s);
