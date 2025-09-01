@@ -12,13 +12,15 @@
         setSiteResult,
         type SpotResult,
         type Catalogue } from "@samply/lens";
-    import catalogueJson from "./config/catalogue.json";
     import { measures } from "$lib/measures";
     import { negotiate } from "$lib/project-manager";
     import { translateAstToCql } from "$lib/ast-to-cql-translator";
     import { options } from "./lib/env-options";
     import { SvelteMap } from "svelte/reactivity";
     import { onMount } from "svelte";
+    import { env } from "$env/dynamic/public";
+    import catalogueProd from "./config/catalogue.json";
+    import catalogueTest from "./config/catalogue-test.json";
 
   let abortController = new AbortController();
   window.addEventListener("lens-search-triggered", () => {
@@ -46,6 +48,7 @@
         measure,
       }),
     );
+        
     querySpot(query, abortController.signal, (result: SpotResult) => {
       const site = result.from.split(".")[1];
       if (result.status === "claimed") {
@@ -66,11 +69,16 @@
     negotiate();
   });
 
-    let catalogue = catalogueJson as Catalogue;
+  onMount(() => {
+    setOptions(options);
+
+    // Set the catalogue based on the environment
+    let catalogue = catalogueProd as Catalogue;
+    if (env.PUBLIC_ENVIRONMENT === "test") {
+      catalogue = catalogueTest as Catalogue;
+    }
     setCatalogue(catalogue);
-    onMount(() => {
-        setOptions(options);
-    })
+  });
 
     const saveQuery = () =>{
        // The query is already stored in the URL, so we can create a simple HTML file that redirects to the current URL.
@@ -100,9 +108,8 @@
     const barChartBackgroundColors: string[] = ["#4dc9f6", "#3da4c7"];
 
     const genderHeaders: Map<string, string> = new SvelteMap<string, string>()
-        .set("male", "Male")
-        .set("female", "Female")
-        .set("unknown", "Unknown");
+        .set("Male", "Male")
+        .set("Female", "Female");
     
     const vitalStateHeaders: Map<string, string> = new SvelteMap<string, string>()
     .set("lebend", "alive")
@@ -219,7 +226,7 @@
         <div class="chart-wrapper chart-age-distribution">
         <lens-chart
           title="Diagnosis Age Distribution"
-          dataKey="age_at_diagnosis"
+          dataKey="diagnosisAge"
           chartType="bar"
           groupRange={10}
           filterRegex="^(([0-9]?[0-9]$)|(1[0-2]0))"
@@ -230,8 +237,8 @@
       </div>
       <div class="chart-wrapper">
         <lens-chart
-          title="Sex Distribution "
-          dataKey="gender"
+          title="Sex Distribution"
+          dataKey="Gender"
           chartType="pie"
           displayLegends={true}
           headers={genderHeaders}

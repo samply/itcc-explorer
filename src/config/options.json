@@ -1,5 +1,5 @@
 {
-  "spotUrl": "https://demo.itcc.samply.de/backend/",
+  "spotUrl": "http://localhost:8055/",
   "language": "en",
   "siteMappings": {
     "inform": "itcc-inform",
