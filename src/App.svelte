@@ -256,7 +256,16 @@
         <lens-result-table pageSize={10}>
         </lens-result-table>
       </div>
-        <div class="chart-wrapper chart-age-distribution">
+      <div class="chart-wrapper">
+        <lens-chart
+          title="Sex Distribution"
+          dataKey="Gender"
+          chartType="pie"
+          displayLegends={true}
+          headers={genderHeaders}
+        ></lens-chart>
+      </div>
+      <div class="chart-wrapper chart-age-distribution">
         <lens-chart
           title="Diagnosis Age Distribution"
           dataKey="diagnosisAge"
@@ -268,13 +277,14 @@
           backgroundColor={barChartBackgroundColors}
         ></lens-chart>
       </div>
-      <div class="chart-wrapper">
+      <div class="chart-wrapper chart-age-distribution">
         <lens-chart
-          title="Sex Distribution"
-          dataKey="Gender"
-          chartType="pie"
-          displayLegends={true}
-          headers={genderHeaders}
+          title="Molecular Marker Distribution"
+          dataKey="MolecularMarkers"
+          chartType="bar"
+          xAxisTitle="Molecular Marker"
+          yAxisTitle="Count"
+          backgroundColor={barChartBackgroundColors}
         ></lens-chart>
       </div>
     </div>
