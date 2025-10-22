@@ -1,28 +1,29 @@
 <script lang="ts">
-    import "./app.css";
-    import { 
-        setOptions,
-        setCatalogue, 
-        getAst,
-        buildLibrary,
-        buildMeasure,
-        clearSiteResults,
-        querySpot,
-        markSiteClaimed,
-        setSiteResult,
-        type SpotResult,
-        type Catalogue } from "@samply/lens";
-    import { measures } from "$lib/measures";
-    import { negotiate } from "$lib/project-manager";
-    import { translateAstToCql } from "$lib/ast-to-cql-translator";
-    import { options } from "./lib/env-options";
-    import { SvelteMap } from "svelte/reactivity";
-    import { onMount } from "svelte";
-    import { env } from "$env/dynamic/public";
-    import catalogueProd from "./config/catalogue.json";
-    import catalogueTest from "./config/catalogue-test.json";
+  import "./app.css";
+  import {
+    setOptions,
+    setCatalogue,
+    getAst,
+    buildLibrary,
+    buildMeasure,
+    clearSiteResults,
+    querySpot,
+    markSiteClaimed,
+    setSiteResult,
+    type SpotResult,
+    type Catalogue
+  } from "@samply/lens";
+  import { measures } from "$lib/measures";
+  import { negotiate } from "$lib/project-manager";
+  import { translateAstToCql } from "$lib/ast-to-cql-translator";
+  import { options } from "./lib/env-options";
+  import { SvelteMap } from "svelte/reactivity";
+  import { onMount } from "svelte";
+  import { env } from "$env/dynamic/public";
+  import catalogueProd from "./config/catalogue.json";
+  import catalogueTest from "./config/catalogue-test.json";
 
-    function normalizeStratifierUsingAggregator(
+  function normalizeStratifierUsingAggregator(
     siteResult: any,
     stratKey: string,
     aggregator: (values: Array<{ key: string; population: number }>) =>
@@ -34,7 +35,7 @@
     // object -> array
     const asArray = Object.entries(s[stratKey]).map(([key, population]) => ({
       key,
-      population: Number(population) || 0,
+      population: Number(population) || 0
     }));
 
     // normalize
@@ -47,62 +48,53 @@
   }
 
   const normalizeGenderAggregator = (values: Array<{ key: string; population: number }>) => {
-  const map = new Map<string, number>();
-  const canon = (raw: string) => {
-    const k = raw.trim().toLowerCase();
-    if (k === "m" || k === "male") return "Male";
-    if (k === "f" || k === "female") return "Female";
-    if (["other", "diverse"].includes(k)) return "Other";
-    if (["unknown", "unbekannt", "unk", "n/a", "na"].includes(k)) return "Unknown";
-    return raw.charAt(0).toUpperCase() + raw.slice(1);
-  };
+    const map = new Map<string, number>();
+    const canon = (raw: string) => {
+      const k = raw.trim().toLowerCase();
+      if (k === "m" || k === "male") return "Male";
+      if (k === "f" || k === "female") return "Female";
+      if (["other", "diverse"].includes(k)) return "Other";
+      if (["unknown", "unbekannt", "unk", "n/a", "na"].includes(k)) return "Unknown";
+      return raw.charAt(0).toUpperCase() + raw.slice(1);
+    };
 
-  for (const { key, population } of values) {
-    const c = canon(key);
-    map.set(c, (map.get(c) || 0) + (Number(population) || 0));
-  }
-  return [...map.entries()].map(([key, population]) => ({ key, population }));
-};
+    for (const { key, population } of values) {
+      const c = canon(key);
+      map.set(c, (map.get(c) || 0) + (Number(population) || 0));
+    }
+    return [...map.entries()].map(([key, population]) => ({ key, population }));
+  };
 
   let abortController = new AbortController();
   window.addEventListener("lens-search-triggered", () => {
     abortController.abort();
     abortController = new AbortController();
-
-    // AST to CQL translation
-    const cql = translateAstToCql(
-      getAst(),
-      false,
-      "DKTK_STRAT_DEF_IN_INITIAL_POPULATION",
-      measures,
-    );
-    const lib = buildLibrary(cql);
-    const measure = buildMeasure(
-      lib.url,
-      measures.map((m) => m.measure),
-    );
-
     clearSiteResults();
-    const query = btoa(
+
+    /** Helper function to base64 encode a UTF-8 string */
+    const base64Encode = (utf8String: string) =>
+      btoa(String.fromCharCode(...new TextEncoder().encode(utf8String)));
+
+    const query = base64Encode(
       JSON.stringify({
-        lang: "cql",
-        lib,
-        measure,
-      }),
+        lang: "ast",
+        payload: base64Encode(
+          JSON.stringify({ ast: getAst(), id: crypto.randomUUID() })
+        )
+      })
     );
-        
     querySpot(query, abortController.signal, (result: SpotResult) => {
       const site = result.from.split(".")[1];
       if (result.status === "claimed") {
         markSiteClaimed(site);
       } else if (result.status === "succeeded") {
         const siteResult = JSON.parse(atob(result.body));
-        normalizeStratifierUsingAggregator(siteResult, "Gender", normalizeGenderAggregator);
         setSiteResult(site, siteResult);
       } else {
+        hideFailedSite(site);
         console.error(
           `Site ${site} failed with status ${result.status}:`,
-          result.body,
+          result.body
         );
       }
     });
@@ -123,8 +115,8 @@
     setCatalogue(catalogue);
   });
 
-    const saveQuery = () =>{
-       // The query is already stored in the URL, so we can create a simple HTML file that redirects to the current URL.
+  const saveQuery = () => {
+    // The query is already stored in the URL, so we can create a simple HTML file that redirects to the current URL.
     const url = window.location.href;
     const htmlContent = `<html><head><meta http-equiv="refresh" content="0;url=${url}"></head><body></body></html>`;
 
@@ -133,67 +125,67 @@
     a.href = URL.createObjectURL(blob);
     const currentDate = new Date();
 
-        const formattedDate = currentDate.toLocaleDateString("de-DE", {
+    const formattedDate = currentDate.toLocaleDateString("de-DE", {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
       hour: "2-digit",
-      minute: "2-digit",
+      minute: "2-digit"
     });
     a.download = `itcc-explorer-query-${formattedDate}.html`;
 
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    }
+  };
 
-    let catalogueOpen: boolean = false;
-    const barChartBackgroundColors: string[] = ["#4dc9f6", "#3da4c7"];
+  let catalogueOpen: boolean = false;
+  const barChartBackgroundColors: string[] = ["#4dc9f6", "#3da4c7"];
 
-    const genderHeaders: Map<string, string> = new SvelteMap<string, string>()
+  const genderHeaders: Map<string, string> = new SvelteMap<string, string>()
     .set("Male", "Male")
     .set("male", "Male")
     .set("Female", "Female")
     .set("female", "Female");
-    
-    const vitalStateHeaders: Map<string, string> = new SvelteMap<string, string>()
+
+  const vitalStateHeaders: Map<string, string> = new SvelteMap<string, string>()
     .set("lebend", "alive")
     .set("verstorben", "deceased")
     .set("unbekannt", "unknown");
 </script>
 
 <header>
-    <div class="header-wrapper">
-        <div class="logo">
-            <img src="../logo-ITCC.jpg" alt="ITCC" />
-        </div>
-        <div class="logo">
-            <img src="../logo-kitz.svg" alt="KiTZ" />
-        </div>
-        <div class="logo">
-            <img src="../logo-PMC-netherlands.svg" alt="Princess Máxima Center" />
-        </div>
-        <div class="logo">
-            <img src="../logo-itcc-zerocc.jpg" alt="Kids Canser Centre" />
-        </div>
-        <div class="logo">
-            <img src="../logo-itcc-smpaeds.png" alt="The Institute of Canser Research" />
-        </div>
-        <div class="logo">
-            <img src="../logo-itcc-dcci.svg" alt="Danish Region hovedstaden" />
-        </div>
-        <div class="logo">
-            <img src="../logo-itcc-profyle.jpg" alt="Precision Oncology For Young People" />
-        </div>
-            <div class="logo">
-            <img src="../logo-itcc-mappyacts.png" alt="Gustave Roussy Cancer Centre" />
-        </div>
-        <h1>ITCC Clinical Data Portal</h1>
+  <div class="header-wrapper">
+    <div class="logo">
+      <img src="../logo-ITCC.jpg" alt="ITCC" />
     </div>
+    <div class="logo">
+      <img src="../logo-kitz.svg" alt="KiTZ" />
+    </div>
+    <div class="logo">
+      <img src="../logo-PMC-netherlands.svg" alt="Princess Máxima Center" />
+    </div>
+    <div class="logo">
+      <img src="../logo-itcc-zerocc.jpg" alt="Kids Canser Centre" />
+    </div>
+    <div class="logo">
+      <img src="../logo-itcc-smpaeds.png" alt="The Institute of Canser Research" />
+    </div>
+    <div class="logo">
+      <img src="../logo-itcc-dcci.svg" alt="Danish Region hovedstaden" />
+    </div>
+    <div class="logo">
+      <img src="../logo-itcc-profyle.jpg" alt="Precision Oncology For Young People" />
+    </div>
+    <div class="logo">
+      <img src="../logo-itcc-mappyacts.png" alt="Gustave Roussy Cancer Centre" />
+    </div>
+    <h1>ITCC Clinical Data Portal</h1>
+  </div>
 </header>
 
 <main>
-    <div class="search">
+  <div class="search">
     <div class="search-wrapper">
       <lens-search-bar noMatchesFoundMessage="No results found"
       ></lens-search-bar>
@@ -204,7 +196,7 @@
         class="save_button"
         on:click={saveQuery}
         title="Save search query"
-        ><img alt="Save search criteria" src="save_24.svg" />
+      ><img alt="Save search criteria" src="save_24.svg" />
       </button>
       <lens-search-button title="Search"></lens-search-button>
     </div>
@@ -212,26 +204,26 @@
 
   <div class="grid">
     <div class="catalogue-wrapper">
-        <div class="catalogue">
-            <div class="catalogue-header">
-                <h2>Search Criteria</h2>
-                <lens-info-button
-                    message={[
+      <div class="catalogue">
+        <div class="catalogue-header">
+          <h2>Search Criteria</h2>
+          <lens-info-button
+            message={[
                     `The search is patient-oriented.`,
                     `For patients with multiple oncological diagnoses, selected search criteria may not only refer to one disease, but also to others.`,
                     `Within a category, different variations are searched with an 'OR-link'; when searching across multiple categories, with an 'AND-link'.`,
                     ]}
-                    buttonSize="20px"
-                    alignDialogue="left"
-                ></lens-info-button>
-            </div>
-            <lens-catalogue toggle={{ collapsable: false, open: catalogueOpen }}
-            ></lens-catalogue>
+            buttonSize="20px"
+            alignDialogue="left"
+          ></lens-info-button>
         </div>
+        <lens-catalogue toggle={{ collapsable: false, open: catalogueOpen }}
+        ></lens-catalogue>
+      </div>
     </div>
 
     <div class="charts">
-        <div class="chart-wrapper result-summary">
+      <div class="chart-wrapper result-summary">
         <lens-result-summary></lens-result-summary>
         {#if options.projectmanagerOptions}
           <lens-negotiate-button
@@ -291,23 +283,24 @@
   </div>
 </main>
 
-<footer> 
+<footer>
   <div>
     Made with ♥ and <a href="https://github.com/samply/lens">samply/lens</a>
   </div>
   <div class="logo">
-      <img src="../logo-dkfz.svg" alt="DKFZ" />
+    <img src="../logo-dkfz.svg" alt="DKFZ" />
   </div>
 </footer>
 
 <style>
-  .catalogue-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: var(--gap-s);
-  }
-  .catalogue-header h2 {
-    margin: 0;
-  }
+    .catalogue-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: var(--gap-s);
+    }
+
+    .catalogue-header h2 {
+        margin: 0;
+    }
 </style>
