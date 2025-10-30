@@ -149,9 +149,12 @@
     .set("female", "Female");
 
   const vitalStateHeaders: Map<string, string> = new SvelteMap<string, string>()
-    .set("lebend", "alive")
-    .set("verstorben", "deceased")
-    .set("unbekannt", "unknown");
+    .set("alive", "Alive")
+    .set("Alive", "Alive")
+    .set("Dead", "Deceased")
+    .set("Deceased", "Deceased")
+    .set("unknown", "Unknown")
+    .set("Unknown", "Unknown");
 </script>
 
 <header>
@@ -267,6 +270,15 @@
           xAxisTitle="Age"
           yAxisTitle="Diagnosis Count"
           backgroundColor={barChartBackgroundColors}
+        ></lens-chart>
+      </div>
+       <div class="chart-wrapper">
+        <lens-chart
+          title="Vital Status"
+          dataKey="75186-7"
+          chartType="pie"
+          displayLegends={true}
+          headers={vitalStateHeaders}
         ></lens-chart>
       </div>
       <div class="chart-wrapper chart-age-distribution">

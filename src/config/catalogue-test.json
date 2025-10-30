@@ -206,7 +206,7 @@
     },
     {
         "fieldType": "group",
-        "key": "MolecularMarker1",
+        "key": "molecular_marker",
         "name": "Molecular marker",
         "childCategories": [
             {
