@@ -4,8 +4,6 @@
     setOptions,
     setCatalogue,
     getAst,
-    buildLibrary,
-    buildMeasure,
     clearSiteResults,
     querySpot,
     markSiteClaimed,
@@ -13,9 +11,7 @@
     type SpotResult,
     type Catalogue,
   } from "@samply/lens";
-  import { measures } from "$lib/measures";
   import { negotiate } from "$lib/project-manager";
-  import { translateAstToCql } from "$lib/ast-to-cql-translator";
   import { options } from "./lib/env-options";
   import { SvelteMap } from "svelte/reactivity";
   import { onMount } from "svelte";
@@ -23,8 +19,9 @@
   import catalogueProd from "./config/catalogue.json";
   import catalogueTest from "./config/catalogue-test.json";
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function normalizeStratifierUsingAggregator(
-    siteResult: any,
+    siteResult: never,
     stratKey: string,
     aggregator: (
       values: Array<{ key: string; population: number }>,
@@ -48,9 +45,11 @@
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const normalizeGenderAggregator = (
     values: Array<{ key: string; population: number }>,
   ) => {
+    // eslint-disable-next-line svelte/prefer-svelte-reactivity
     const map = new Map<string, number>();
     const canon = (raw: string) => {
       const k = raw.trim().toLowerCase();
