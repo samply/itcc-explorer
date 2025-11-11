@@ -11,7 +11,7 @@
     markSiteClaimed,
     setSiteResult,
     type SpotResult,
-    type Catalogue
+    type Catalogue,
   } from "@samply/lens";
   import { measures } from "$lib/measures";
   import { negotiate } from "$lib/project-manager";
@@ -26,8 +26,9 @@
   function normalizeStratifierUsingAggregator(
     siteResult: any,
     stratKey: string,
-    aggregator: (values: Array<{ key: string; population: number }>) =>
-      Array<{ key: string; population: number }>
+    aggregator: (
+      values: Array<{ key: string; population: number }>,
+    ) => Array<{ key: string; population: number }>,
   ) {
     const s = siteResult?.stratifiers;
     if (!s || !s[stratKey]) return;
@@ -35,7 +36,7 @@
     // object -> array
     const asArray = Object.entries(s[stratKey]).map(([key, population]) => ({
       key,
-      population: Number(population) || 0
+      population: Number(population) || 0,
     }));
 
     // normalize
@@ -43,18 +44,21 @@
 
     // array -> object
     s[stratKey] = Object.fromEntries(
-      normalized.map(({ key, population }) => [key, population])
+      normalized.map(({ key, population }) => [key, population]),
     );
   }
 
-  const normalizeGenderAggregator = (values: Array<{ key: string; population: number }>) => {
+  const normalizeGenderAggregator = (
+    values: Array<{ key: string; population: number }>,
+  ) => {
     const map = new Map<string, number>();
     const canon = (raw: string) => {
       const k = raw.trim().toLowerCase();
       if (k === "m" || k === "male") return "Male";
       if (k === "f" || k === "female") return "Female";
       if (["other", "diverse"].includes(k)) return "Other";
-      if (["unknown", "unbekannt", "unk", "n/a", "na"].includes(k)) return "Unknown";
+      if (["unknown", "unbekannt", "unk", "n/a", "na"].includes(k))
+        return "Unknown";
       return raw.charAt(0).toUpperCase() + raw.slice(1);
     };
 
@@ -79,9 +83,9 @@
       JSON.stringify({
         lang: "ast",
         payload: base64Encode(
-          JSON.stringify({ ast: getAst(), id: crypto.randomUUID() })
-        )
-      })
+          JSON.stringify({ ast: getAst(), id: crypto.randomUUID() }),
+        ),
+      }),
     );
     querySpot(query, abortController.signal, (result: SpotResult) => {
       const site = result.from.split(".")[1];
@@ -94,7 +98,7 @@
         hideFailedSite(site);
         console.error(
           `Site ${site} failed with status ${result.status}:`,
-          result.body
+          result.body,
         );
       }
     });
@@ -130,7 +134,7 @@
       month: "2-digit",
       day: "2-digit",
       hour: "2-digit",
-      minute: "2-digit"
+      minute: "2-digit",
     });
     a.download = `itcc-explorer-query-${formattedDate}.html`;
 
@@ -172,16 +176,25 @@
       <img src="../logo-itcc-zerocc.jpg" alt="Kids Canser Centre" />
     </div>
     <div class="logo">
-      <img src="../logo-itcc-smpaeds.png" alt="The Institute of Canser Research" />
+      <img
+        src="../logo-itcc-smpaeds.png"
+        alt="The Institute of Canser Research"
+      />
     </div>
     <div class="logo">
       <img src="../logo-itcc-dcci.svg" alt="Danish Region hovedstaden" />
     </div>
     <div class="logo">
-      <img src="../logo-itcc-profyle.jpg" alt="Precision Oncology For Young People" />
+      <img
+        src="../logo-itcc-profyle.jpg"
+        alt="Precision Oncology For Young People"
+      />
     </div>
     <div class="logo">
-      <img src="../logo-itcc-mappyacts.png" alt="Gustave Roussy Cancer Centre" />
+      <img
+        src="../logo-itcc-mappyacts.png"
+        alt="Gustave Roussy Cancer Centre"
+      />
     </div>
     <h1>ITCC Clinical Data Portal</h1>
   </div>
@@ -195,11 +208,8 @@
       <lens-query-explain-button
         noQueryMessage="Empty search query: Searches for all results."
       ></lens-query-explain-button>
-      <button
-        class="save_button"
-        on:click={saveQuery}
-        title="Save search query"
-      ><img alt="Save search criteria" src="save_24.svg" />
+      <button class="save_button" on:click={saveQuery} title="Save search query"
+        ><img alt="Save search criteria" src="save_24.svg" />
       </button>
       <lens-search-button title="Search"></lens-search-button>
     </div>
@@ -212,10 +222,10 @@
           <h2>Search Criteria</h2>
           <lens-info-button
             message={[
-                    `The search is patient-oriented.`,
-                    `For patients with multiple oncological diagnoses, selected search criteria may not only refer to one disease, but also to others.`,
-                    `Within a category, different variations are searched with an 'OR-link'; when searching across multiple categories, with an 'AND-link'.`,
-                    ]}
+              `The search is patient-oriented.`,
+              `For patients with multiple oncological diagnoses, selected search criteria may not only refer to one disease, but also to others.`,
+              `Within a category, different variations are searched with an 'OR-link'; when searching across multiple categories, with an 'AND-link'.`,
+            ]}
             buttonSize="20px"
             alignDialogue="left"
           ></lens-info-button>
@@ -234,7 +244,9 @@
             title="Data and sample requests"
           ></lens-negotiate-button>
         {/if}
-        <lens-search-modified-display>Charts no longer represent the current search!</lens-search-modified-display>
+        <lens-search-modified-display
+          >Charts no longer represent the current search!</lens-search-modified-display
+        >
       </div>
       <div class="chart-wrapper chart-diagnosis">
         <lens-chart
@@ -248,8 +260,7 @@
         ></lens-chart>
       </div>
       <div class="chart-wrapper result-table">
-        <lens-result-table pageSize={10}>
-        </lens-result-table>
+        <lens-result-table pageSize={10}> </lens-result-table>
       </div>
       <div class="chart-wrapper">
         <lens-chart
@@ -272,7 +283,7 @@
           backgroundColor={barChartBackgroundColors}
         ></lens-chart>
       </div>
-       <div class="chart-wrapper">
+      <div class="chart-wrapper">
         <lens-chart
           title="Vital Status"
           dataKey="75186-7"
@@ -305,14 +316,14 @@
 </footer>
 
 <style>
-    .catalogue-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: var(--gap-s);
-    }
+  .catalogue-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--gap-s);
+  }
 
-    .catalogue-header h2 {
-        margin: 0;
-    }
+  .catalogue-header h2 {
+    margin: 0;
+  }
 </style>

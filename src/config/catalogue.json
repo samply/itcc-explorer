@@ -1,622 +1,622 @@
 [
-    {
-        "fieldType": "group",
-        "key": "patient",
-        "name": "Patient",
-        "childCategories": [
-            {
-                "key": "gender",
-                "name": "Sex",
-                "system": "",
-                "fieldType": "single-select",
-                "type": "EQUALS",
-                "criteria": [
-                    {
-                        "key": "Male",
-                        "name": "Male",
-                        "description": "Male"
-                    },
-                    {
-                        "key": "Female",
-                        "name": "Female",
-                        "description": "Female"
-                    },
-                    {
-                        "key": "Unknown",
-                        "name": "Unknown",
-                        "description": "Unknown"
-                    }
-                ]
-            },
-            {
-                "key": "vital_status",
-                "name": "Vital Status",
-                "system": "http://fhir.itcc.org/CodeSystem/VitalStatus",
-                "fieldType": "single-select",
-                "type": "EQUALS",
-                "criteria": [
-                    {
-                        "key": "Alive",
-                        "name": "Alive",
-                        "description": "Alive"
-                    },
-                    {
-                        "key": "Dead",
-                        "name": "Dead",
-                        "description": "Dead"
-                    },
-                    {
-                        "key": "Unknown",
-                        "name": "Unknown",
-                        "description": "Unknown"
-                    }
-                ]
-            }
+  {
+    "fieldType": "group",
+    "key": "patient",
+    "name": "Patient",
+    "childCategories": [
+      {
+        "key": "gender",
+        "name": "Sex",
+        "system": "",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "Male",
+            "name": "Male",
+            "description": "Male"
+          },
+          {
+            "key": "Female",
+            "name": "Female",
+            "description": "Female"
+          },
+          {
+            "key": "Unknown",
+            "name": "Unknown",
+            "description": "Unknown"
+          }
         ]
-    },
-    {
-        "fieldType": "group",
-        "key": "clinical_diagnosis",
-        "name": "Clinical Diagnosis",
-        "childCategories": [
-            {
-                "key": "age_at_diagnosis",
-                "name": "Age at Diagnosis (in years)",
-                "system": "",
-                "fieldType": "number",
-                "type": "BETWEEN",
-                "min": 0,
-                "max": 130
-            },
-            {
-                "key": "diagnosis",
-                "name": "Diagnosis",
-                "system": "http://dktk.dkfz.de/fhir/onco/core/CodeSystem/DiagnoseFreitextCS",
-                "fieldType": "single-select",
-                "type": "EQUALS",
-                "criteria": [
-                    {
-                        "key": "ALL",
-                        "name": "ALL",
-                        "description": "ALL"
-                    },
-                    {
-                        "key": "AML",
-                        "name": "AML",
-                        "description": "AML"
-                    },
-                    {
-                        "key": "DSRCT",
-                        "name": "DSRCT",
-                        "description": "DSRCT"
-                    },
-                    {
-                        "key": "EPN",
-                        "name": "EPN",
-                        "description": "EPN"
-                    },
-                    {
-                        "key": "EWS",
-                        "name": "EWS",
-                        "description": "EWS"
-                    },
-                    {
-                        "key": "HGG",
-                        "name": "HGG",
-                        "description": "HGG"
-                    },
-                    {
-                        "key": "MB",
-                        "name": "MB",
-                        "description": "MB"
-                    },
-                    {
-                        "key": "NBL",
-                        "name": "NBL",
-                        "description": "NBL"
-                    },
-                    {
-                        "key": "NHL",
-                        "name": "NHL",
-                        "description": "NHL"
-                    },
-                    {
-                        "key": "Osteo",
-                        "name": "Osteo",
-                        "description": "Osteo"
-                    },
-                    {
-                        "key": "Other",
-                        "name": "Other",
-                        "description": "Other"
-                    },
-                    {
-                        "key": "Rhabdoid",
-                        "name": "Rhabdoid",
-                        "description": "Rhabdoid"
-                    },
-                    {
-                        "key": "STS",
-                        "name": "STS",
-                        "description": "STS"
-                    }
-                ]
-            },
-            {
-                "key": "disease_is_extend",
-                "name": "Disease Extend",
-                "system": "http://fhir.itcc.org/CodeSystem/DiseaseExtent",
-                "fieldType": "single-select",
-                "type": "EQUALS",
-                "criteria": [
-                    {
-                        "key": "Localised",
-                        "name": "Localised",
-                        "description": "Localised"
-                    },
-                    {
-                        "key": "Metastatic",
-                        "name": "Metastatic",
-                        "description": "Metastatic"
-                    },
-                    {
-                        "key": "Unknown",
-                        "name": "Unknown",
-                        "description": "Unknown"
-                    }
-                ]
-            }
+      },
+      {
+        "key": "vital_status",
+        "name": "Vital Status",
+        "system": "http://fhir.itcc.org/CodeSystem/VitalStatus",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "Alive",
+            "name": "Alive",
+            "description": "Alive"
+          },
+          {
+            "key": "Dead",
+            "name": "Dead",
+            "description": "Dead"
+          },
+          {
+            "key": "Unknown",
+            "name": "Unknown",
+            "description": "Unknown"
+          }
         ]
-    },
-    {
-        "fieldType": "group",
-        "key": "sample_category",
-        "name": "Sample",
-        "childCategories": [
-            {
-                "key": "type_sample_criteria",
-                "name": "Type of The Sample",
-                "system": "http://dktk.dkfz.de/fhir/onco/core/CodeSystem/VitalstatusCS",
-                "fieldType": "single-select",
-                "type": "EQUALS",
-                "criteria": [
-                    {
-                        "key": "primary tumor at diagnosis",
-                        "name": "primary tumor at diagnosis",
-                        "description": "primary tumor at diagnosis"
-                    },
-                    {
-                        "key": "metastatic site at diagnosis",
-                        "name": "metastatic site at diagnosis",
-                        "description": "metastatic site at diagnosis"
-                    },
-                    {
-                        "key": "primary tumor at relapse",
-                        "name": "primary tumor at relapse",
-                        "description": "primary tumor at relapse"
-                    },
-                    {
-                        "key": "metastatic site at relapse",
-                        "name": "metastatic site at relapse",
-                        "description": "metastatic site at relapse"
-                    }
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "fieldType": "group",
+    "key": "clinical_diagnosis",
+    "name": "Clinical Diagnosis",
+    "childCategories": [
+      {
+        "key": "age_at_diagnosis",
+        "name": "Age at Diagnosis (in years)",
+        "system": "",
+        "fieldType": "number",
+        "type": "BETWEEN",
+        "min": 0,
+        "max": 130
+      },
+      {
+        "key": "diagnosis",
+        "name": "Diagnosis",
+        "system": "http://dktk.dkfz.de/fhir/onco/core/CodeSystem/DiagnoseFreitextCS",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "ALL",
+            "name": "ALL",
+            "description": "ALL"
+          },
+          {
+            "key": "AML",
+            "name": "AML",
+            "description": "AML"
+          },
+          {
+            "key": "DSRCT",
+            "name": "DSRCT",
+            "description": "DSRCT"
+          },
+          {
+            "key": "EPN",
+            "name": "EPN",
+            "description": "EPN"
+          },
+          {
+            "key": "EWS",
+            "name": "EWS",
+            "description": "EWS"
+          },
+          {
+            "key": "HGG",
+            "name": "HGG",
+            "description": "HGG"
+          },
+          {
+            "key": "MB",
+            "name": "MB",
+            "description": "MB"
+          },
+          {
+            "key": "NBL",
+            "name": "NBL",
+            "description": "NBL"
+          },
+          {
+            "key": "NHL",
+            "name": "NHL",
+            "description": "NHL"
+          },
+          {
+            "key": "Osteo",
+            "name": "Osteo",
+            "description": "Osteo"
+          },
+          {
+            "key": "Other",
+            "name": "Other",
+            "description": "Other"
+          },
+          {
+            "key": "Rhabdoid",
+            "name": "Rhabdoid",
+            "description": "Rhabdoid"
+          },
+          {
+            "key": "STS",
+            "name": "STS",
+            "description": "STS"
+          }
         ]
-    },
-    {
-        "fieldType": "group",
-        "key": "MolecularMarker1",
-        "name": "Molecular marker",
-        "childCategories": [
-            {
-                "key": "48018-6",
-                "name": "Gene",
-                "system": "http://www.genenames.org",
-                "fieldType": "autocomplete",
-                "type": "EQUALS",
-                "criteria": [
-                    {
-                        "key": "TP53",
-                        "name": "TP53",
-                        "description": "tumor protein p53"
-                    },
-                    {
-                        "key": "RB1",
-                        "name": "RB1",
-                        "description": "RB transcriptional corepressor 1"
-                    },
-                    {
-                        "key": "CDKN2A",
-                        "name": "CDKN2A",
-                        "description": "cyclin dependent kinase inhibitor 2A"
-                    },
-                    {
-                        "key": "PTEN",
-                        "name": "PTEN",
-                        "description": "phosphatase and tensin homolog"
-                    },
-                    {
-                        "key": "WT1",
-                        "name": "WT1",
-                        "description": "WT1 transcription factor"
-                    },
-                    {
-                        "key": "AMER1",
-                        "name": "AMER1",
-                        "description": "APC membrane recruitment protein 1"
-                    },
-                    {
-                        "key": "ATRX",
-                        "name": "ATRX",
-                        "description": "ATRX chromatin remodeler"
-                    },
-                    {
-                        "key": "FBXW7",
-                        "name": "FBXW7",
-                        "description": "F-box and WD repeat domain containing 7"
-                    },
-                    {
-                        "key": "NF1",
-                        "name": "NF1",
-                        "description": "neurofibromin 1"
-                    },
-                    {
-                        "key": "SMARCA4",
-                        "name": "SMARCA4",
-                        "description": "SWI/SNF related BAF chromatin remodeling complex subunit ATPase 4"
-                    },
-                    {
-                        "key": "SMARCB1",
-                        "name": "SMARCB1",
-                        "description": "SWI/SNF related BAF chromatin remodeling complex subunit B1"
-                    },
-                    {
-                        "key": "BCOR",
-                        "name": "BCOR",
-                        "description": "BCL6 corepressor"
-                    },
-                    {
-                        "key": "MYCN",
-                        "name": "MYCN",
-                        "description": "MYCN proto-oncogene, bHLH transcription factor"
-                    },
-                    {
-                        "key": "MYC",
-                        "name": "MYC",
-                        "description": "MYC proto-oncogene, bHLH transcription factor"
-                    },
-                    {
-                        "key": "ALK",
-                        "name": "ALK",
-                        "description": "ALK receptor tyrosine kinase"
-                    },
-                    {
-                        "key": "BRAF",
-                        "name": "BRAF",
-                        "description": "B-Raf proto-oncogene, serine/threonine kinase"
-                    },
-                    {
-                        "key": "KRAS",
-                        "name": "KRAS",
-                        "description": "KRAS proto-oncogene, GTPase"
-                    },
-                    {
-                        "key": "NRAS",
-                        "name": "NRAS",
-                        "description": "NRAS proto-oncogene, GTPase"
-                    },
-                    {
-                        "key": "HRAS",
-                        "name": "HRAS",
-                        "description": "HRas proto-oncogene, GTPase"
-                    },
-                    {
-                        "key": "FGFR1",
-                        "name": "FGFR1",
-                        "description": "fibroblast growth factor receptor 1"
-                    },
-                    {
-                        "key": "FGFR2",
-                        "name": "FGFR2",
-                        "description": "fibroblast growth factor receptor 2"
-                    },
-                    {
-                        "key": "FGFR3",
-                        "name": "FGFR3",
-                        "description": "fibroblast growth factor receptor 3"
-                    },
-                    {
-                        "key": "FGFR4",
-                        "name": "FGFR4",
-                        "description": "fibroblast growth factor receptor 4"
-                    },
-                    {
-                        "key": "EZH2",
-                        "name": "EZH2",
-                        "description": "enhancer of zeste 2 polycomb repressive complex 2 subunit"
-                    },
-                    {
-                        "key": "PIK3CA",
-                        "name": "PIK3CA",
-                        "description": "phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit alpha"
-                    },
-                    {
-                        "key": "PAX3",
-                        "name": "PAX3",
-                        "description": "paired box 3"
-                    },
-                    {
-                        "key": "PAX7",
-                        "name": "PAX7",
-                        "description": "paired box 7"
-                    },
-                    {
-                        "key": "PHOX2B",
-                        "name": "PHOX2B",
-                        "description": "paired like homeobox 2B"
-                    },
-                    {
-                        "key": "IGF1R",
-                        "name": "IGF1R",
-                        "description": "insulin like growth factor 1 receptor"
-                    },
-                    {
-                        "key": "SALL4",
-                        "name": "SALL4",
-                        "description": "spalt like transcription factor 4"
-                    },
-                    {
-                        "key": "NANOG",
-                        "name": "NANOG",
-                        "description": "Nanog homeobox"
-                    },
-                    {
-                        "key": "POU5F1",
-                        "name": "POU5F1",
-                        "description": "POU class 5 homeobox 1"
-                    },
-                    {
-                        "key": "SOX2",
-                        "name": "SOX2",
-                        "description": "SRY-box transcription factor 2"
-                    },
-                    {
-                        "key": "SIX1",
-                        "name": "SIX1",
-                        "description": "SIX homeobox 1"
-                    },
-                    {
-                        "key": "SIX2",
-                        "name": "SIX2",
-                        "description": "SIX homeobox 2"
-                    },
-                    {
-                        "key": "SETD2",
-                        "name": "SETD2",
-                        "description": "SET domain containing 2, histone lysine methyltransferase"
-                    },
-                    {
-                        "key": "KMT2A",
-                        "name": "KMT2A",
-                        "description": "lysine methyltransferase 2A"
-                    },
-                    {
-                        "key": "KMT2D",
-                        "name": "KMT2D",
-                        "description": "lysine methyltransferase 2D"
-                    },
-                    {
-                        "key": "CREBBP",
-                        "name": "CREBBP",
-                        "description": "CREB binding protein"
-                    },
-                    {
-                        "key": "EP300",
-                        "name": "EP300",
-                        "description": "E1A binding protein p300"
-                    },
-                    {
-                        "key": "IDH1",
-                        "name": "IDH1",
-                        "description": "isocitrate dehydrogenase (NADP(+)) 1"
-                    },
-                    {
-                        "key": "IDH2",
-                        "name": "IDH2",
-                        "description": "isocitrate dehydrogenase (NADP(+)) 2"
-                    },
-                    {
-                        "key": "TERT",
-                        "name": "TERT",
-                        "description": "telomerase reverse transcriptase"
-                    },
-                    {
-                        "key": "DDX3X",
-                        "name": "DDX3X",
-                        "description": "DEAD-box helicase 3 X-linked"
-                    },
-                    {
-                        "key": "NTRK1",
-                        "name": "NTRK1",
-                        "description": "neurotrophic receptor tyrosine kinase 1"
-                    },
-                    {
-                        "key": "NTRK2",
-                        "name": "NTRK2",
-                        "description": "neurotrophic receptor tyrosine kinase 2"
-                    },
-                    {
-                        "key": "NTRK3",
-                        "name": "NTRK3",
-                        "description": "neurotrophic receptor tyrosine kinase 3"
-                    },
-                    {
-                        "key": "MDM2",
-                        "name": "MDM2",
-                        "description": "MDM2 proto-oncogene"
-                    },
-                    {
-                        "key": "CDK4",
-                        "name": "CDK4",
-                        "description": "cyclin dependent kinase 4"
-                    },
-                    {
-                        "key": "CDK6",
-                        "name": "CDK6",
-                        "description": "cyclin dependent kinase 6"
-                    },
-                    {
-                        "key": "VEGFA",
-                        "name": "VEGFA",
-                        "description": "vascular endothelial growth factor A"
-                    },
-                    {
-                        "key": "MET",
-                        "name": "MET",
-                        "description": "MET proto-oncogene, receptor tyrosine kinase"
-                    },
-                    {
-                        "key": "IGF2",
-                        "name": "IGF2",
-                        "description": "insulin like growth factor 2"
-                    },
-                    {
-                        "key": "MAP2K1",
-                        "name": "MAP2K1",
-                        "description": "mitogen-activated protein kinase kinase 1"
-                    },
-                    {
-                        "key": "MAPK1",
-                        "name": "MAPK1",
-                        "description": "mitogen-activated protein kinase 1"
-                    },
-                    {
-                        "key": "CSF1R",
-                        "name": "CSF1R",
-                        "description": "colony stimulating factor 1 receptor"
-                    },
-                    {
-                        "key": "FLT3",
-                        "name": "FLT3",
-                        "description": "fms related receptor tyrosine kinase 3"
-                    },
-                    {
-                        "key": "NPM1",
-                        "name": "NPM1",
-                        "description": "nucleophosmin 1"
-                    },
-                    {
-                        "key": "JAK2",
-                        "name": "JAK2",
-                        "description": "Janus kinase 2"
-                    },
-                    {
-                        "key": "IKZF1",
-                        "name": "IKZF1",
-                        "description": "IKAROS family zinc finger 1"
-                    },
-                    {
-                        "key": "PAX5",
-                        "name": "PAX5",
-                        "description": "paired box 5"
-                    },
-                    {
-                        "key": "SHH",
-                        "name": "SHH",
-                        "description": "sonic hedgehog signaling molecule"
-                    },
-                    {
-                        "key": "PTCH1",
-                        "name": "PTCH1",
-                        "description": "patched 1"
-                    },
-                    {
-                        "key": "SMO",
-                        "name": "SMO",
-                        "description": "smoothened, frizzled class receptor"
-                    },
-                    {
-                        "key": "SUFU",
-                        "name": "SUFU",
-                        "description": "SUFU negative regulator of hedgehog signaling"
-                    },
-                    {
-                        "key": "CTNNB1",
-                        "name": "CTNNB1",
-                        "description": "catenin beta 1"
-                    },
-                    {
-                        "key": "APC",
-                        "name": "APC",
-                        "description": "APC regulator of WNT signaling pathway"
-                    },
-                    {
-                        "key": "STAG2",
-                        "name": "STAG2",
-                        "description": "STAG2 cohesin complex component"
-                    },
-                    {
-                        "key": "DUX4",
-                        "name": "DUX4",
-                        "description": "double homeobox 4"
-                    },
-                    {
-                        "key": "KIF1B",
-                        "name": "KIF1B",
-                        "description": "kinesin family member 1B"
-                    },
-                    {
-                        "key": "PHLPP1",
-                        "name": "PHLPP1",
-                        "description": "PH domain and leucine rich repeat protein phosphatase 1"
-                    },
-                    {
-                        "key": "ETV6",
-                        "name": "ETV6",
-                        "description": "ETS variant transcription factor 6"
-                    },
-                    {
-                        "key": "NOTCH1",
-                        "name": "NOTCH1",
-                        "description": "notch receptor 1"
-                    },
-                    {
-                        "key": "MGMT",
-                        "name": "MGMT",
-                        "description": "O-6-methylguanine-DNA methyltransferase"
-                    }
-                ]
-            },
-            {
-                "key": "mutation_type",
-                "name": "Mutation Type",
-                "system": "http://itcc.dkfz.de/fhir/itcc/CodeSystem/MutationTypeCS",
-                "fieldType": "single-select",
-                "type": "EQUALS",
-                "criteria": [
-                    {
-                        "key": "DEL",
-                        "name": "DEL",
-                        "description": "DEL"
-                    },
-                    {
-                        "key": "INS",
-                        "name": "INS",
-                        "description": "INS"
-                    },
-                    {
-                        "key": "SNP",
-                        "name": "SNP",
-                        "description": "SNP"
-                    },
-                    {
-                        "key": "IGR ",
-                        "name": "IGR ",
-                        "description": "IGR "
-                    }
-                ]
-            }
+      },
+      {
+        "key": "disease_is_extend",
+        "name": "Disease Extend",
+        "system": "http://fhir.itcc.org/CodeSystem/DiseaseExtent",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "Localised",
+            "name": "Localised",
+            "description": "Localised"
+          },
+          {
+            "key": "Metastatic",
+            "name": "Metastatic",
+            "description": "Metastatic"
+          },
+          {
+            "key": "Unknown",
+            "name": "Unknown",
+            "description": "Unknown"
+          }
         ]
-    }
+      }
+    ]
+  },
+  {
+    "fieldType": "group",
+    "key": "sample_category",
+    "name": "Sample",
+    "childCategories": [
+      {
+        "key": "type_sample_criteria",
+        "name": "Type of The Sample",
+        "system": "http://dktk.dkfz.de/fhir/onco/core/CodeSystem/VitalstatusCS",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "primary tumor at diagnosis",
+            "name": "primary tumor at diagnosis",
+            "description": "primary tumor at diagnosis"
+          },
+          {
+            "key": "metastatic site at diagnosis",
+            "name": "metastatic site at diagnosis",
+            "description": "metastatic site at diagnosis"
+          },
+          {
+            "key": "primary tumor at relapse",
+            "name": "primary tumor at relapse",
+            "description": "primary tumor at relapse"
+          },
+          {
+            "key": "metastatic site at relapse",
+            "name": "metastatic site at relapse",
+            "description": "metastatic site at relapse"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "fieldType": "group",
+    "key": "MolecularMarker1",
+    "name": "Molecular marker",
+    "childCategories": [
+      {
+        "key": "48018-6",
+        "name": "Gene",
+        "system": "http://www.genenames.org",
+        "fieldType": "autocomplete",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "TP53",
+            "name": "TP53",
+            "description": "tumor protein p53"
+          },
+          {
+            "key": "RB1",
+            "name": "RB1",
+            "description": "RB transcriptional corepressor 1"
+          },
+          {
+            "key": "CDKN2A",
+            "name": "CDKN2A",
+            "description": "cyclin dependent kinase inhibitor 2A"
+          },
+          {
+            "key": "PTEN",
+            "name": "PTEN",
+            "description": "phosphatase and tensin homolog"
+          },
+          {
+            "key": "WT1",
+            "name": "WT1",
+            "description": "WT1 transcription factor"
+          },
+          {
+            "key": "AMER1",
+            "name": "AMER1",
+            "description": "APC membrane recruitment protein 1"
+          },
+          {
+            "key": "ATRX",
+            "name": "ATRX",
+            "description": "ATRX chromatin remodeler"
+          },
+          {
+            "key": "FBXW7",
+            "name": "FBXW7",
+            "description": "F-box and WD repeat domain containing 7"
+          },
+          {
+            "key": "NF1",
+            "name": "NF1",
+            "description": "neurofibromin 1"
+          },
+          {
+            "key": "SMARCA4",
+            "name": "SMARCA4",
+            "description": "SWI/SNF related BAF chromatin remodeling complex subunit ATPase 4"
+          },
+          {
+            "key": "SMARCB1",
+            "name": "SMARCB1",
+            "description": "SWI/SNF related BAF chromatin remodeling complex subunit B1"
+          },
+          {
+            "key": "BCOR",
+            "name": "BCOR",
+            "description": "BCL6 corepressor"
+          },
+          {
+            "key": "MYCN",
+            "name": "MYCN",
+            "description": "MYCN proto-oncogene, bHLH transcription factor"
+          },
+          {
+            "key": "MYC",
+            "name": "MYC",
+            "description": "MYC proto-oncogene, bHLH transcription factor"
+          },
+          {
+            "key": "ALK",
+            "name": "ALK",
+            "description": "ALK receptor tyrosine kinase"
+          },
+          {
+            "key": "BRAF",
+            "name": "BRAF",
+            "description": "B-Raf proto-oncogene, serine/threonine kinase"
+          },
+          {
+            "key": "KRAS",
+            "name": "KRAS",
+            "description": "KRAS proto-oncogene, GTPase"
+          },
+          {
+            "key": "NRAS",
+            "name": "NRAS",
+            "description": "NRAS proto-oncogene, GTPase"
+          },
+          {
+            "key": "HRAS",
+            "name": "HRAS",
+            "description": "HRas proto-oncogene, GTPase"
+          },
+          {
+            "key": "FGFR1",
+            "name": "FGFR1",
+            "description": "fibroblast growth factor receptor 1"
+          },
+          {
+            "key": "FGFR2",
+            "name": "FGFR2",
+            "description": "fibroblast growth factor receptor 2"
+          },
+          {
+            "key": "FGFR3",
+            "name": "FGFR3",
+            "description": "fibroblast growth factor receptor 3"
+          },
+          {
+            "key": "FGFR4",
+            "name": "FGFR4",
+            "description": "fibroblast growth factor receptor 4"
+          },
+          {
+            "key": "EZH2",
+            "name": "EZH2",
+            "description": "enhancer of zeste 2 polycomb repressive complex 2 subunit"
+          },
+          {
+            "key": "PIK3CA",
+            "name": "PIK3CA",
+            "description": "phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit alpha"
+          },
+          {
+            "key": "PAX3",
+            "name": "PAX3",
+            "description": "paired box 3"
+          },
+          {
+            "key": "PAX7",
+            "name": "PAX7",
+            "description": "paired box 7"
+          },
+          {
+            "key": "PHOX2B",
+            "name": "PHOX2B",
+            "description": "paired like homeobox 2B"
+          },
+          {
+            "key": "IGF1R",
+            "name": "IGF1R",
+            "description": "insulin like growth factor 1 receptor"
+          },
+          {
+            "key": "SALL4",
+            "name": "SALL4",
+            "description": "spalt like transcription factor 4"
+          },
+          {
+            "key": "NANOG",
+            "name": "NANOG",
+            "description": "Nanog homeobox"
+          },
+          {
+            "key": "POU5F1",
+            "name": "POU5F1",
+            "description": "POU class 5 homeobox 1"
+          },
+          {
+            "key": "SOX2",
+            "name": "SOX2",
+            "description": "SRY-box transcription factor 2"
+          },
+          {
+            "key": "SIX1",
+            "name": "SIX1",
+            "description": "SIX homeobox 1"
+          },
+          {
+            "key": "SIX2",
+            "name": "SIX2",
+            "description": "SIX homeobox 2"
+          },
+          {
+            "key": "SETD2",
+            "name": "SETD2",
+            "description": "SET domain containing 2, histone lysine methyltransferase"
+          },
+          {
+            "key": "KMT2A",
+            "name": "KMT2A",
+            "description": "lysine methyltransferase 2A"
+          },
+          {
+            "key": "KMT2D",
+            "name": "KMT2D",
+            "description": "lysine methyltransferase 2D"
+          },
+          {
+            "key": "CREBBP",
+            "name": "CREBBP",
+            "description": "CREB binding protein"
+          },
+          {
+            "key": "EP300",
+            "name": "EP300",
+            "description": "E1A binding protein p300"
+          },
+          {
+            "key": "IDH1",
+            "name": "IDH1",
+            "description": "isocitrate dehydrogenase (NADP(+)) 1"
+          },
+          {
+            "key": "IDH2",
+            "name": "IDH2",
+            "description": "isocitrate dehydrogenase (NADP(+)) 2"
+          },
+          {
+            "key": "TERT",
+            "name": "TERT",
+            "description": "telomerase reverse transcriptase"
+          },
+          {
+            "key": "DDX3X",
+            "name": "DDX3X",
+            "description": "DEAD-box helicase 3 X-linked"
+          },
+          {
+            "key": "NTRK1",
+            "name": "NTRK1",
+            "description": "neurotrophic receptor tyrosine kinase 1"
+          },
+          {
+            "key": "NTRK2",
+            "name": "NTRK2",
+            "description": "neurotrophic receptor tyrosine kinase 2"
+          },
+          {
+            "key": "NTRK3",
+            "name": "NTRK3",
+            "description": "neurotrophic receptor tyrosine kinase 3"
+          },
+          {
+            "key": "MDM2",
+            "name": "MDM2",
+            "description": "MDM2 proto-oncogene"
+          },
+          {
+            "key": "CDK4",
+            "name": "CDK4",
+            "description": "cyclin dependent kinase 4"
+          },
+          {
+            "key": "CDK6",
+            "name": "CDK6",
+            "description": "cyclin dependent kinase 6"
+          },
+          {
+            "key": "VEGFA",
+            "name": "VEGFA",
+            "description": "vascular endothelial growth factor A"
+          },
+          {
+            "key": "MET",
+            "name": "MET",
+            "description": "MET proto-oncogene, receptor tyrosine kinase"
+          },
+          {
+            "key": "IGF2",
+            "name": "IGF2",
+            "description": "insulin like growth factor 2"
+          },
+          {
+            "key": "MAP2K1",
+            "name": "MAP2K1",
+            "description": "mitogen-activated protein kinase kinase 1"
+          },
+          {
+            "key": "MAPK1",
+            "name": "MAPK1",
+            "description": "mitogen-activated protein kinase 1"
+          },
+          {
+            "key": "CSF1R",
+            "name": "CSF1R",
+            "description": "colony stimulating factor 1 receptor"
+          },
+          {
+            "key": "FLT3",
+            "name": "FLT3",
+            "description": "fms related receptor tyrosine kinase 3"
+          },
+          {
+            "key": "NPM1",
+            "name": "NPM1",
+            "description": "nucleophosmin 1"
+          },
+          {
+            "key": "JAK2",
+            "name": "JAK2",
+            "description": "Janus kinase 2"
+          },
+          {
+            "key": "IKZF1",
+            "name": "IKZF1",
+            "description": "IKAROS family zinc finger 1"
+          },
+          {
+            "key": "PAX5",
+            "name": "PAX5",
+            "description": "paired box 5"
+          },
+          {
+            "key": "SHH",
+            "name": "SHH",
+            "description": "sonic hedgehog signaling molecule"
+          },
+          {
+            "key": "PTCH1",
+            "name": "PTCH1",
+            "description": "patched 1"
+          },
+          {
+            "key": "SMO",
+            "name": "SMO",
+            "description": "smoothened, frizzled class receptor"
+          },
+          {
+            "key": "SUFU",
+            "name": "SUFU",
+            "description": "SUFU negative regulator of hedgehog signaling"
+          },
+          {
+            "key": "CTNNB1",
+            "name": "CTNNB1",
+            "description": "catenin beta 1"
+          },
+          {
+            "key": "APC",
+            "name": "APC",
+            "description": "APC regulator of WNT signaling pathway"
+          },
+          {
+            "key": "STAG2",
+            "name": "STAG2",
+            "description": "STAG2 cohesin complex component"
+          },
+          {
+            "key": "DUX4",
+            "name": "DUX4",
+            "description": "double homeobox 4"
+          },
+          {
+            "key": "KIF1B",
+            "name": "KIF1B",
+            "description": "kinesin family member 1B"
+          },
+          {
+            "key": "PHLPP1",
+            "name": "PHLPP1",
+            "description": "PH domain and leucine rich repeat protein phosphatase 1"
+          },
+          {
+            "key": "ETV6",
+            "name": "ETV6",
+            "description": "ETS variant transcription factor 6"
+          },
+          {
+            "key": "NOTCH1",
+            "name": "NOTCH1",
+            "description": "notch receptor 1"
+          },
+          {
+            "key": "MGMT",
+            "name": "MGMT",
+            "description": "O-6-methylguanine-DNA methyltransferase"
+          }
+        ]
+      },
+      {
+        "key": "mutation_type",
+        "name": "Mutation Type",
+        "system": "http://itcc.dkfz.de/fhir/itcc/CodeSystem/MutationTypeCS",
+        "fieldType": "single-select",
+        "type": "EQUALS",
+        "criteria": [
+          {
+            "key": "DEL",
+            "name": "DEL",
+            "description": "DEL"
+          },
+          {
+            "key": "INS",
+            "name": "INS",
+            "description": "INS"
+          },
+          {
+            "key": "SNP",
+            "name": "SNP",
+            "description": "SNP"
+          },
+          {
+            "key": "IGR ",
+            "name": "IGR ",
+            "description": "IGR "
+          }
+        ]
+      }
+    ]
+  }
 ]

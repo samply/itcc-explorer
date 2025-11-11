@@ -20,11 +20,13 @@
     },
     "diagnosis": {
       "hintText": [
-        "For patients with multiple oncology diagnoses, entries that may not match the selected search criteria will also be displayed."      ]
+        "For patients with multiple oncology diagnoses, entries that may not match the selected search criteria will also be displayed."
+      ]
     },
     "age_at_diagnosis": {
       "hintText": [
-        "For patients with multiple primary diagnoses, entries that may be outside the search criteria are also displayed."      ]
+        "For patients with multiple primary diagnoses, entries that may be outside the search criteria are also displayed."
+      ]
     },
     "75186-7": {
       "hintText": [
@@ -33,7 +35,7 @@
         "\"unbekannt\": kein Geburtsdatum oder Todesdatum bekannt."
       ]
     }
-    },
+  },
   "tableOptions": {
     "headerData": [
       {

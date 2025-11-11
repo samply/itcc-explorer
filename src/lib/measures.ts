@@ -1,145 +1,147 @@
 import type { FhirMeasureItem } from "@samply/lens";
 
 const itccPatientsMeasure: FhirMeasureItem = {
-    key: "patients",
-    measure: {
-        code: {
-            text: "patients",
-        },
-    population: [
-        {
-          code: {
-            coding: [
-              {
-                system: "http://terminology.hl7.org/CodeSystem/measure-population",
-                code: "initial-population"
-              }
-            ]
-          },
-          criteria: {
-            language: "text/cql-identifier",
-            expression: "InInitialPopulation"
-          }
-        }
-      ],
-      stratifier: [
-        {
-          code: {
-            text: "Gender"
-          },
-          criteria: {
-            language: "text/cql",
-            expression: "Gender"
-          }
-        }
-      ]
+  key: "patients",
+  measure: {
+    code: {
+      text: "patients",
     },
-  cql:
-    `DKTK_STRAT_GENDER_STRATIFIER`
-}
+    population: [
+      {
+        code: {
+          coding: [
+            {
+              system:
+                "http://terminology.hl7.org/CodeSystem/measure-population",
+              code: "initial-population",
+            },
+          ],
+        },
+        criteria: {
+          language: "text/cql-identifier",
+          expression: "InInitialPopulation",
+        },
+      },
+    ],
+    stratifier: [
+      {
+        code: {
+          text: "Gender",
+        },
+        criteria: {
+          language: "text/cql",
+          expression: "Gender",
+        },
+      },
+    ],
+  },
+  cql: `DKTK_STRAT_GENDER_STRATIFIER`,
+};
 
-const itccDiagnosisMeasure:FhirMeasureItem = {
+const itccDiagnosisMeasure: FhirMeasureItem = {
   key: "diagnosis",
   measure: {
     code: {
-      text: "diagnosis"
+      text: "diagnosis",
     },
     extension: [
       {
         url: "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis",
-        valueCode: "Condition"
-      }
+        valueCode: "Condition",
+      },
     ],
     population: [
       {
         code: {
           coding: [
             {
-              system: "http://terminology.hl7.org/CodeSystem/measure-population",
-              code: "initial-population"
-            }
-          ]
+              system:
+                "http://terminology.hl7.org/CodeSystem/measure-population",
+              code: "initial-population",
+            },
+          ],
         },
         criteria: {
           language: "text/cql-identifier",
-          expression: "Diagnosis"
-        }
-      }
+          expression: "Diagnosis",
+        },
+      },
     ],
     stratifier: [
       {
         code: {
-          text: "diagnosis"
+          text: "diagnosis",
         },
         criteria: {
           language: "text/cql-identifier",
-          expression: "DiagnosisCode"
-        }
+          expression: "DiagnosisCode",
+        },
       },
       {
         code: {
-          text: "diagnosisAge"
+          text: "diagnosisAge",
         },
         criteria: {
           language: "text/cql-identifier",
-          expression: "DiagnosisAge"
-        }
-      }
-    ]
+          expression: "DiagnosisAge",
+        },
+      },
+    ],
   },
-  cql:`
+  cql: `
   ITCC_STRAT_DIAGNOSIS_STRATIFIER
   ITCC_STRAT_AGE_CLASS_STRATIFIER
-  `
-}
+  `,
+};
 
-const itccObservationMeasure:FhirMeasureItem = {
+const itccObservationMeasure: FhirMeasureItem = {
   key: "MolecularMarker",
   measure: {
     code: {
-      text: "MolecularMarker"
+      text: "MolecularMarker",
     },
     extension: [
       {
         url: "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis",
-        valueCode: "Observation"
-      }
+        valueCode: "Observation",
+      },
     ],
     population: [
       {
         code: {
           coding: [
             {
-              system: "http://terminology.hl7.org/CodeSystem/measure-population",
-              code: "initial-population"
-            }
-          ]
+              system:
+                "http://terminology.hl7.org/CodeSystem/measure-population",
+              code: "initial-population",
+            },
+          ],
         },
         criteria: {
           language: "text/cql-identifier",
-          expression: "GeneticVariantCount"
-        }
-      }
+          expression: "GeneticVariantCount",
+        },
+      },
     ],
     stratifier: [
       {
         code: {
-          text: "MolecularMarkers"
+          text: "MolecularMarkers",
         },
         criteria: {
           language: "text/cql-identifier",
-          expression: "GeneticVariantCode"
-        }
-      }
-    ]
+          expression: "GeneticVariantCode",
+        },
+      },
+    ],
   },
-  cql:`
+  cql: `
   DKTK_STRAT_GENETIC_VARIANT
-  `
-}
+  `,
+};
 
 export const measures: FhirMeasureItem[] = [
-    itccPatientsMeasure,
-    itccDiagnosisMeasure,
-    itccObservationMeasure,
-]
+  itccPatientsMeasure,
+  itccDiagnosisMeasure,
+  itccObservationMeasure,
+];
