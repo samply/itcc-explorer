@@ -21,12 +21,13 @@
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function normalizeStratifierUsingAggregator(
-    siteResult: never,
+    siteResult: unknown,
     stratKey: string,
     aggregator: (
       values: Array<{ key: string; population: number }>,
     ) => Array<{ key: string; population: number }>,
   ) {
+    // @ts-expect-error Property 'stratifiers'
     const s = siteResult?.stratifiers;
     if (!s || !s[stratKey]) return;
 
@@ -86,6 +87,7 @@
         ),
       }),
     );
+
     querySpot(query, abortController.signal, (result: SpotResult) => {
       const site = result.from.split(".")[1];
       if (result.status === "claimed") {
@@ -94,6 +96,7 @@
         const siteResult = JSON.parse(atob(result.body));
         setSiteResult(site, siteResult);
       } else {
+        // @ts-expect-error Undeclared fn
         hideFailedSite(site);
         console.error(
           `Site ${site} failed with status ${result.status}:`,
