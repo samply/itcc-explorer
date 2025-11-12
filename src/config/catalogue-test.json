@@ -176,7 +176,7 @@
       {
         "key": "type_sample_criteria",
         "name": "Type of The Sample",
-        "system": "http://dktk.dkfz.de/fhir/onco/core/CodeSystem/VitalstatusCS",
+        "system": "http://fhir.itcc.org/CodeSystem/SampleType",
         "fieldType": "single-select",
         "type": "EQUALS",
         "criteria": [
@@ -206,11 +206,11 @@
   },
   {
     "fieldType": "group",
-    "key": "MolecularMarker1",
+    "key": "molecular_marker",
     "name": "Molecular marker",
     "childCategories": [
       {
-        "key": "48018-6",
+        "key": "observationMolecularMarkerName",
         "name": "Gene",
         "system": "http://www.genenames.org",
         "fieldType": "autocomplete",

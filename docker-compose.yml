@@ -21,6 +21,7 @@ services:
       BIND_ADDR: 0.0.0.0:8055
       RUST_LOG: "info"
       LOG_FILE: /logs/requests.log
+      PROJECT: "itcc"
     volumes:
       - ./logs:/logs
     depends_on:
