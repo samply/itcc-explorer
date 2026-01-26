@@ -1,0 +1,73 @@
+{
+  "spotUrl": "https://demo.itcc.samply.de/prod",
+  "language": "en",
+  "siteMappings": {
+    "inform": "itcc-inform",
+    "ither": "itcc-ither",
+    "mappyacts": "itcc-mappyacts",
+    "profyle": "itcc-profyle",
+    "smpaeds": "itcc-smpaeds",
+    "zero": "itcc-zero",
+    "dcci": "itcc-dcci"
+  },
+  "chartOptions": {
+    "gender": {
+      "legendMapping": {
+        "male": "Male",
+        "female": "Female",
+        "unknown": "Unknown"
+      }
+    },
+    "diagnosis": {
+      "hintText": [
+        "For patients with multiple oncology diagnoses, entries that may not match the selected search criteria will also be displayed."
+      ]
+    },
+    "age_at_diagnosis": {
+      "hintText": [
+        "For patients with multiple primary diagnoses, entries that may be outside the search criteria are also displayed."
+      ]
+    },
+    "75186-7": {
+      "hintText": [
+        "\"verstorben\": ein Todesdatum ist dokumentiert oder das aktuelle Lebensalter ist größer 123 Jahre.",
+        "\"lebend\": wird angenommen, wenn kein Todesdatum dokumentiert ist oder das aktuelle Lebensalter nicht 123 Jahre überschritten hat.",
+        "\"unbekannt\": kein Geburtsdatum oder Todesdatum bekannt."
+      ]
+    }
+  },
+  "tableOptions": {
+    "headerData": [
+      {
+        "title": "Sites",
+        "dataKey": "site"
+      },
+      {
+        "title": "Patients",
+        "dataKey": "patients"
+      },
+      {
+        "title": "Diagnosis",
+        "dataKey": "diagnosis"
+      }
+    ]
+  },
+  "resultSummaryOptions": {
+    "title": "Results",
+    "infoButtonText": "Results",
+    "dataTypes": [
+      {
+        "title": "Sites",
+        "dataKey": "collections"
+      },
+      {
+        "title": "Patients",
+        "dataKey": "patients"
+      },
+      {
+        "title": "Diagnosis",
+        "dataKey": "diagnosis"
+      }
+    ]
+  }
+}
