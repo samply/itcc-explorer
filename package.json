@@ -15,7 +15,7 @@
     "schemagen": "bash scripts/generate-json-schema.bash"
   },
   "devDependencies": {
-    "@eslint/compat": "^1.2.5",
+    "@eslint/compat": "^2.0.1",
     "@eslint/js": "^9.18.0",
     "@sveltejs/adapter-auto": "^6.0.0",
     "@sveltejs/adapter-node": "^5.3.1",
